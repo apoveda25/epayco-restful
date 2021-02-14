@@ -1,0 +1,62 @@
+syntax = "proto3";
+
+package recharge;
+
+import "../wallets/wallet.proto";
+
+service RechargesService {
+  rpc create (RechargeCreate) returns (RechargePopulate) {}
+  rpc update (RechargeUpdate) returns (RechargePopulate) {}
+  rpc remove (RechargeRemove) returns (RechargePopulate) {}
+  rpc find (RechargeFind) returns (RechargePopulate) {}
+  rpc search (RechargeSearch) returns (RechargesPopulate) {}
+}
+
+message RechargeCreate {
+  float mount = 1;
+  string createdBy = 2;
+  optional string wallet = 3;
+}
+
+message RechargeUpdate {
+  string _id = 1;
+  optional float mount = 2;
+  string updatedBy = 3;
+  optional string wallet = 4;
+}
+
+message RechargeRemove {
+  string _id = 1;
+}
+
+message RechargeFind {
+  string _id = 1;
+}
+
+message RechargeSearch {
+  optional string _id = 1;
+  optional float mount = 2;
+}
+
+message RechargePopulate {
+  string _id = 1;
+  float mount = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+  string createdBy = 5;
+  string updatedBy = 6;
+  optional Wallet wallet = 7;
+}
+
+message RechargesPopulate {
+  repeated RechargePopulate recharges = 1;
+}
+
+message Recharge {
+  string _id = 1;
+  float mount = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+  string createdBy = 5;
+  string updatedBy = 6;
+}

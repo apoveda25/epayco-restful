@@ -1,0 +1,68 @@
+syntax = "proto3";
+
+package wallet;
+
+import "../users/user.proto";
+import "../recharges/recharge.proto";
+import "../payments/payment.proto";
+
+service WalletsService {
+  rpc create (WalletCreate) returns (WalletPopulate) {}
+  rpc update (WalletUpdate) returns (WalletPopulate) {}
+  rpc remove (WalletRemove) returns (WalletPopulate) {}
+  rpc find (WalletFind) returns (WalletPopulate) {}
+  rpc search (WalletSearch) returns (WalletsPopulate) {}
+}
+
+message WalletCreate {
+  float balance = 1;
+  string createdBy = 2;
+  optional string user = 3;
+}
+
+message WalletUpdate {
+  string _id = 1;
+  optional float balance = 2;
+  string updatedBy = 3;
+  optional string user = 4;
+  repeated string recharges = 5;
+  repeated string payments = 6;
+}
+
+message WalletRemove {
+  string _id = 1;
+}
+
+message WalletFind {
+  string _id = 1;
+}
+
+message WalletSearch {
+  optional string _id = 1;
+  optional float balance = 2;
+}
+
+message WalletPopulate {
+  string _id = 1;
+  float balance = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+  string createdBy = 5;
+  string updatedBy = 6;
+  optional User user = 7;
+  repeated Recharge recharges = 8;
+  repeated Payment payments = 9;
+}
+
+message WalletsPopulate {
+  repeated WalletPopulate wallets = 1;
+}
+
+message Wallet {
+  string _id = 1;
+  float balance = 2;
+  string createdAt = 3;
+  string updatedAt = 4;
+  string createdBy = 5;
+  string updatedBy = 6;
+}

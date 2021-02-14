@@ -1,0 +1,11 @@
+app:
+  name: 'users-service-restful'
+  host: 'http://localhost'
+  port: 3000
+
+db:
+  mongodb:
+    uri: 'mongodb://localhost:27017'
+    username: 'root'
+    password: 'secret123'
+    database: 'epayco'

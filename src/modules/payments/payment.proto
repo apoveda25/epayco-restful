@@ -1,0 +1,73 @@
+syntax = "proto3";
+
+package payment;
+
+import "../wallets/wallet.proto";
+
+service PaymentsService {
+  rpc create (PaymentCreate) returns (PaymentPopulate) {}
+  rpc update (PaymentUpdate) returns (PaymentPopulate) {}
+  rpc remove (PaymentRemove) returns (PaymentPopulate) {}
+  rpc find (PaymentFind) returns (PaymentPopulate) {}
+  rpc search (PaymentSearch) returns (PaymentsPopulate) {}
+}
+
+message PaymentCreate {
+  float mount = 1;
+  string sesionId = 2;
+  string createdBy = 3;
+  optional string wallet = 4;
+}
+
+message PaymentUpdate {
+  string _id = 1;
+  optional float mount = 2;
+  optional bool verified = 3;
+  string updatedBy = 4;
+  optional string wallet = 5;
+}
+
+message PaymentRemove {
+  string _id = 1;
+}
+
+message PaymentFind {
+  string _id = 1;
+}
+
+message PaymentSearch {
+  optional string _id = 1;
+  optional float mount = 2;
+  optional bool verified = 3;
+  optional string code = 4;
+  optional string sesionId = 5;
+}
+
+message PaymentPopulate {
+  string _id = 1;
+  float mount = 2;
+  bool verified = 3;
+  string code = 4;
+  string sesionId = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+  string createdBy = 8;
+  string updatedBy = 9;
+  optional Wallet wallet = 10;
+}
+
+message PaymentsPopulate {
+  repeated PaymentPopulate payments = 1;
+}
+
+message Payment {
+  string _id = 1;
+  float mount = 2;
+  bool verified = 3;
+  string code = 4;
+  string sesionId = 5;
+  string createdAt = 6;
+  string updatedAt = 7;
+  string createdBy = 8;
+  string updatedBy = 9;
+}

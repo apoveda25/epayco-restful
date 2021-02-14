@@ -1,0 +1,24 @@
+syntax = "proto3";
+
+package authentication;
+
+import "../users/user.proto";
+
+service AuthenticationService {
+  rpc register (Register) returns (User) {}
+  rpc login (Login) returns (User) {}
+}
+
+message Register {
+  string document = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+  string cellphone = 5;
+  string password = 6;
+}
+
+message Login {
+  string email = 1;
+  string password = 2;
+}

@@ -1,0 +1,83 @@
+syntax = "proto3";
+
+package user;
+
+import "../wallets/wallet.proto";
+
+service UsersService {
+  rpc create (UserCreate) returns (UserPopulate) {}
+  rpc update (UserUpdate) returns (UserPopulate) {}
+  rpc remove (UserRemove) returns (UserPopulate) {}
+  rpc find (UserFind) returns (UserPopulate) {}
+  rpc search (UserSearch) returns (UsersPopulate) {}
+}
+
+message UserCreate {
+  string document = 1;
+  string name = 2;
+  string surname = 3;
+  string email = 4;
+  string cellphone = 5;
+  string password = 6;
+  string createdBy = 7;
+  optional string wallet = 8;
+}
+
+message UserUpdate {
+  string _id = 1;
+  optional string document = 2;
+  optional string name = 3;
+  optional string surname = 4;
+  optional string email = 5;
+  optional string cellphone = 6;
+  string updatedBy = 7;
+  optional string wallet = 8;
+}
+
+message UserRemove {
+  string _id = 1;
+}
+
+message UserFind {
+  string _id = 1;
+}
+
+message UserSearch {
+  optional string _id = 1;
+  optional string document = 2;
+  optional string name = 3;
+  optional string surname = 4;
+  optional string email = 5;
+  optional string cellphone = 6;
+}
+
+message UserPopulate {
+  string _id = 1;
+  string document = 2;
+  string name = 3;
+  string surname = 4;
+  string email = 5;
+  string cellphone = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+  string createdBy = 9;
+  string updatedBy = 10;
+  optional Wallet wallet = 11;
+}
+
+message UsersPopulate {
+  repeated UserPopulate users = 1;
+}
+
+message User {
+  string _id = 1;
+  string document = 2;
+  string name = 3;
+  string surname = 4;
+  string email = 5;
+  string cellphone = 6;
+  string createdAt = 7;
+  string updatedAt = 8;
+  string createdBy = 9;
+  string updatedBy = 10;
+}
