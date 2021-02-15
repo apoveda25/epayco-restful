@@ -4,6 +4,6 @@ import { RegisterAutheticationDto } from '../dto/register-authetication.dto';
 import { LoginAutheticationDto } from '../dto/login-authetication.dto';
 
 export interface AuthServiceGrpc {
-  register(data: RegisterAutheticationDto): Promise<Observable<User>>;
-  login(data: LoginAutheticationDto): Promise<Observable<User>>;
+  register(data: RegisterAutheticationDto): Observable<User>;
+  login(data: LoginAutheticationDto): Observable<User>;
 }

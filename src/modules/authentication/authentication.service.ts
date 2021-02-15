@@ -11,6 +11,7 @@ import { AuthServiceGrpc } from './interfaces/auth-service-grpc.interface';
 import { ClientGrpc } from '@nestjs/microservices';
 import { WalletsService } from '../wallets/wallets.service';
 import { LoginAutheticationDto } from './dto/login-authetication.dto';
+import { UserPopulate } from '../users/entities/user.entity';
 
 @Injectable()
 export class AuthenticationService implements OnModuleInit {
@@ -28,18 +29,19 @@ export class AuthenticationService implements OnModuleInit {
     );
   }
 
-  async register(registerAutheticationDto: RegisterAutheticationDto) {
+  async register(
+    registerAutheticationDto: RegisterAutheticationDto,
+  ): Promise<UserPopulate> {
     try {
-      const user$ = await this.authServiceGrpc.register(
-        registerAutheticationDto,
-      );
-      const user = await user$.toPromise();
-      const wallet$ = await this.walletsService.create({
+      const user = await this.authServiceGrpc
+        .register(registerAutheticationDto)
+        .toPromise();
+
+      const wallet = await this.walletsService.create({
         balance: 0,
         createdBy: user._id,
         user: user._id,
       });
-      const wallet = await wallet$.toPromise();
 
       return await this.usersService.update({
         _id: user._id,
@@ -51,9 +53,13 @@ export class AuthenticationService implements OnModuleInit {
     }
   }
 
-  async login(loginAutheticationDto: LoginAutheticationDto) {
+  async login(
+    loginAutheticationDto: LoginAutheticationDto,
+  ): Promise<UserPopulate> {
     try {
-      return await this.authServiceGrpc.login(loginAutheticationDto);
+      return await this.authServiceGrpc
+        .login(loginAutheticationDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

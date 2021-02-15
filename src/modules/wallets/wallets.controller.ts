@@ -15,11 +15,18 @@ import { CreateWalletDto } from './dto/create-wallet.dto';
 import { SearchWalletDto } from './dto/search-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { RemoveWalletDto } from './dto/remove-wallet.dto';
+import { GetBalanceWalletDto } from './dto/get-balance-wallet.dto';
 
 @ApiTags('Wallets')
 @Controller('wallets')
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
+
+  @ApiOkResponse({ type: WalletPopulate })
+  @Get('/get-balance')
+  async getBalance(@Query() getBalanceWalletDto: GetBalanceWalletDto) {
+    return await this.walletsService.getBalance(getBalanceWalletDto);
+  }
 
   @ApiCreatedResponse({ type: WalletPopulate })
   @Post()

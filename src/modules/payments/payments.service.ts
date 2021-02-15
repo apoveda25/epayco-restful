@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
 import { PaymentPopulate } from './entities/payment.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
 import { FindPaymentDto } from './dto/find-payment.dto';
@@ -28,12 +27,12 @@ export class PaymentsService implements OnModuleInit {
     );
   }
 
-  async create(
-    createPaymentDto: CreatePaymentDto,
-  ): Promise<Observable<PaymentPopulate>> {
+  async create(createPaymentDto: CreatePaymentDto): Promise<PaymentPopulate> {
     try {
-      const payment$ = await this.paymentsServiceGrpc.create(createPaymentDto);
-      const payment = await payment$.toPromise();
+      const payment = await this.paymentsServiceGrpc
+        .create(createPaymentDto)
+        .toPromise();
+
       // await this.mailerService.sendMail({
       //   to: 'test@nestjs.com', // list of receivers
       //   from: 'noreply@nestjs.com', // sender address
@@ -42,47 +41,45 @@ export class PaymentsService implements OnModuleInit {
       //   html: '<b>welcome</b>', // HTML body content
       // });
 
-      return payment$;
+      return payment;
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async find(
-    findPaymentDto: FindPaymentDto,
-  ): Promise<Observable<PaymentPopulate>> {
+  async find(findPaymentDto: FindPaymentDto): Promise<PaymentPopulate> {
     try {
-      return await this.paymentsServiceGrpc.find(findPaymentDto);
+      return await this.paymentsServiceGrpc.find(findPaymentDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async search(
-    searchPaymentDto: SearchPaymentDto,
-  ): Promise<Observable<SearchPaymentsDto>> {
+  async search(searchPaymentDto: SearchPaymentDto): Promise<SearchPaymentsDto> {
     try {
-      return await this.paymentsServiceGrpc.search(searchPaymentDto);
+      return await this.paymentsServiceGrpc
+        .search(searchPaymentDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async update(
-    updatePaymentDto: UpdatePaymentDto,
-  ): Promise<Observable<PaymentPopulate>> {
+  async update(updatePaymentDto: UpdatePaymentDto): Promise<PaymentPopulate> {
     try {
-      return await this.paymentsServiceGrpc.update(updatePaymentDto);
+      return await this.paymentsServiceGrpc
+        .update(updatePaymentDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async remove(
-    removePaymentDto: RemovePaymentDto,
-  ): Promise<Observable<PaymentPopulate>> {
+  async remove(removePaymentDto: RemovePaymentDto): Promise<PaymentPopulate> {
     try {
-      return await this.paymentsServiceGrpc.remove(removePaymentDto);
+      return await this.paymentsServiceGrpc
+        .remove(removePaymentDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

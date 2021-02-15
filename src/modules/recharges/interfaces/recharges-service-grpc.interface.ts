@@ -8,9 +8,9 @@ import { SearchRechargeDto } from '../dto/search-recharge.dto';
 import { CreateRechargeServiceDto } from '../dto/create-recharge-service.dto';
 
 export interface RechargesServiceGrpc {
-  create(data: CreateRechargeServiceDto): Promise<Observable<RechargePopulate>>;
-  update(data: UpdateRechargeDto): Promise<Observable<RechargePopulate>>;
-  remove(data: RemoveRechargeDto): Promise<Observable<RechargePopulate>>;
-  find(data: FindRechargeDto): Promise<Observable<RechargePopulate>>;
-  search(data: SearchRechargeDto): Promise<Observable<SearchRechargesDto>>;
+  create(data: CreateRechargeServiceDto): Observable<RechargePopulate>;
+  update(data: UpdateRechargeDto): Observable<RechargePopulate>;
+  remove(data: RemoveRechargeDto): Observable<RechargePopulate>;
+  find(data: FindRechargeDto): Observable<RechargePopulate>;
+  search(data: SearchRechargeDto): Observable<SearchRechargesDto>;
 }

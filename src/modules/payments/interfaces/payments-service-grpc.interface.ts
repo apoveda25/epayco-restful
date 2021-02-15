@@ -8,9 +8,9 @@ import { SearchPaymentDto } from '../dto/search-payment.dto';
 import { SearchPaymentsDto } from '../dto/search-payments.dto';
 
 export interface PaymentsServiceGrpc {
-  create(data: CreatePaymentDto): Promise<Observable<PaymentPopulate>>;
-  update(data: UpdatePaymentDto): Promise<Observable<PaymentPopulate>>;
-  remove(data: RemovePaymentDto): Promise<Observable<PaymentPopulate>>;
-  find(data: FindPaymentDto): Promise<Observable<PaymentPopulate>>;
-  search(data: SearchPaymentDto): Promise<Observable<SearchPaymentsDto>>;
+  create(data: CreatePaymentDto): Observable<PaymentPopulate>;
+  update(data: UpdatePaymentDto): Observable<PaymentPopulate>;
+  remove(data: RemovePaymentDto): Observable<PaymentPopulate>;
+  find(data: FindPaymentDto): Observable<PaymentPopulate>;
+  search(data: SearchPaymentDto): Observable<SearchPaymentsDto>;
 }

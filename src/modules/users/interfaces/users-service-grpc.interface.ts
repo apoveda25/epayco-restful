@@ -8,9 +8,9 @@ import { SearchUserDto } from '../dto/search-user.dto';
 import { SearchUsersDto } from '../dto/search-users.dto';
 
 export interface UsersServiceGrpc {
-  create(data: CreateUserDto): Promise<Observable<UserPopulate>>;
-  update(data: UpdateUserDto): Promise<Observable<UserPopulate>>;
-  remove(data: RemoveUserDto): Promise<Observable<UserPopulate>>;
-  find(data: FindUserDto): Promise<Observable<UserPopulate>>;
-  search(data: SearchUserDto): Promise<Observable<SearchUsersDto>>;
+  create(data: CreateUserDto): Observable<UserPopulate>;
+  update(data: UpdateUserDto): Observable<UserPopulate>;
+  remove(data: RemoveUserDto): Observable<UserPopulate>;
+  find(data: FindUserDto): Observable<UserPopulate>;
+  search(data: SearchUserDto): Observable<SearchUsersDto>;
 }
