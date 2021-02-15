@@ -15,11 +15,21 @@ import { CreatePaymentDto } from './dto/create-payment.dto';
 import { SearchPaymentDto } from './dto/search-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { RemovePaymentDto } from './dto/remove-payment.dto';
+import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
 
 @ApiTags('Payments')
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
+
+  @ApiCreatedResponse({ type: PaymentPopulate })
+  @Post(':_id/confirm')
+  async confirm(
+    @Param('_id') _id: string,
+    @Body() confirmPaymentDto: ConfirmPaymentDto,
+  ) {
+    return await this.paymentsService.confirm(_id, confirmPaymentDto);
+  }
 
   @ApiCreatedResponse({ type: PaymentPopulate })
   @Post()

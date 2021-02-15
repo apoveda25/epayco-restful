@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsString, IsMongoId, Min } from 'class-validator';
+import { IsString, IsMongoId, Min, IsOptional } from 'class-validator';
 
 export class CreatePaymentDto {
   @ApiProperty()
@@ -16,5 +16,6 @@ export class CreatePaymentDto {
 
   @ApiProperty()
   @IsMongoId()
-  wallet: string;
+  @IsOptional()
+  wallet?: string;
 }

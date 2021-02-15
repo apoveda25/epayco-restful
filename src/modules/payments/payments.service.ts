@@ -13,6 +13,7 @@ import { SearchPaymentDto } from './dto/search-payment.dto';
 import { SearchPaymentsDto } from './dto/search-payments.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { RemovePaymentDto } from './dto/remove-payment.dto';
+import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
 import { PaymentsServiceGrpc } from './interfaces/payments-service-grpc.interface';
 import { WalletsService } from '../wallets/wallets.service';
 import { MailService } from './mail.service';
@@ -31,6 +32,43 @@ export class PaymentsService implements OnModuleInit {
     this.paymentsServiceGrpc = this.client.getService<PaymentsServiceGrpc>(
       'PaymentsService',
     );
+  }
+
+  async confirm(
+    paymentId: string,
+    confirmPaymentDto: ConfirmPaymentDto,
+  ): Promise<PaymentPopulate> {
+    try {
+      const payment = await this.paymentsServiceGrpc
+        .find({ _id: paymentId })
+        .toPromise();
+
+      if (
+        payment.code === confirmPaymentDto.code &&
+        payment.sesionId === confirmPaymentDto.sesionId
+      ) {
+        await this.walletsService.update({
+          _id: payment.wallet._id,
+          balance: payment.wallet.balance - payment.mount,
+          updatedBy: confirmPaymentDto.updatedBy,
+        });
+
+        return await this.paymentsServiceGrpc
+          .update({
+            _id: paymentId,
+            verified: true,
+            updatedBy: confirmPaymentDto.updatedBy,
+          })
+          .toPromise();
+      }
+
+      throw new HttpException(
+        'Payment code not valid.',
+        HttpStatus.BAD_REQUEST,
+      );
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async create(createPaymentDto: CreatePaymentDto): Promise<PaymentPopulate> {
@@ -57,6 +95,7 @@ export class PaymentsService implements OnModuleInit {
         _to: [wallet.user.email],
         code: payment.code,
       });
+
       // const payment = await payment$.toPromise();
       // await this.mailerService.sendMail({
       //   to: 'test@nestjs.com', // list of receivers
