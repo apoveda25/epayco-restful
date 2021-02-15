@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Min, IsMongoId, IsOptional, IsBoolean } from 'class-validator';
+import {
+  Min,
+  IsMongoId,
+  IsOptional,
+  IsBoolean,
+  Matches,
+} from 'class-validator';
 
 export class SearchPaymentDto {
   @ApiProperty({ required: false })
@@ -20,5 +26,9 @@ export class SearchPaymentDto {
   @ApiProperty({ required: false })
   @IsBoolean()
   @IsOptional()
-  sessionId?: string;
+  sesionId?: string;
+
+  @Matches(/^[\d]{6}$/)
+  @IsOptional()
+  code?: string;
 }

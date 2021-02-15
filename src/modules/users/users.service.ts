@@ -28,49 +28,41 @@ export class UsersService implements OnModuleInit {
     );
   }
 
-  async create(
-    createUserDto: CreateUserDto,
-  ): Promise<Observable<UserPopulate>> {
+  async create(createUserDto: CreateUserDto): Promise<UserPopulate> {
     try {
-      return await this.usersServiceGrpc.create(createUserDto);
+      return await this.usersServiceGrpc.create(createUserDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async find(findUserDto: FindUserDto): Promise<Observable<UserPopulate>> {
+  async find(findUserDto: FindUserDto): Promise<UserPopulate> {
     try {
-      return await this.usersServiceGrpc.find(findUserDto);
+      return await this.usersServiceGrpc.find(findUserDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async search(
-    searchUserDto: SearchUserDto,
-  ): Promise<Observable<SearchUsersDto>> {
+  async search(searchUserDto: SearchUserDto): Promise<SearchUsersDto> {
     try {
-      return await this.usersServiceGrpc.search(searchUserDto);
+      return await this.usersServiceGrpc.search(searchUserDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async update(
-    updateUserDto: UpdateUserDto,
-  ): Promise<Observable<UserPopulate>> {
+  async update(updateUserDto: UpdateUserDto): Promise<UserPopulate> {
     try {
-      return await this.usersServiceGrpc.update(updateUserDto);
+      return await this.usersServiceGrpc.update(updateUserDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async remove(
-    removeUserDto: RemoveUserDto,
-  ): Promise<Observable<UserPopulate>> {
+  async remove(removeUserDto: RemoveUserDto): Promise<UserPopulate> {
     try {
-      return await this.usersServiceGrpc.remove(removeUserDto);
+      return await this.usersServiceGrpc.remove(removeUserDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

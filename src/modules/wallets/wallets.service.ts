@@ -6,7 +6,6 @@ import {
   HttpException,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
 import { WalletsServiceGrpc } from './interfaces/wallets-service-grpc.interface';
 import { WalletPopulate } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
@@ -28,51 +27,41 @@ export class WalletsService implements OnModuleInit {
     );
   }
 
-  async create(
-    createWalletDto: CreateWalletDto,
-  ): Promise<Observable<WalletPopulate>> {
+  async create(createWalletDto: CreateWalletDto): Promise<WalletPopulate> {
     try {
-      return await this.walletsServiceGrpc.create(createWalletDto);
+      return await this.walletsServiceGrpc.create(createWalletDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async find(
-    findWalletDto: FindWalletDto,
-  ): Promise<Observable<WalletPopulate>> {
+  async find(findWalletDto: FindWalletDto): Promise<WalletPopulate> {
     try {
-      return await this.walletsServiceGrpc.find(findWalletDto);
+      return await this.walletsServiceGrpc.find(findWalletDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async search(
-    searchWalletDto: SearchWalletDto,
-  ): Promise<Observable<SearchWalletsDto>> {
+  async search(searchWalletDto: SearchWalletDto): Promise<SearchWalletsDto> {
     try {
-      return await this.walletsServiceGrpc.search(searchWalletDto);
+      return await this.walletsServiceGrpc.search(searchWalletDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async update(
-    updateWalletDto: UpdateWalletDto,
-  ): Promise<Observable<WalletPopulate>> {
+  async update(updateWalletDto: UpdateWalletDto): Promise<WalletPopulate> {
     try {
-      return await this.walletsServiceGrpc.update(updateWalletDto);
+      return await this.walletsServiceGrpc.update(updateWalletDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
   }
 
-  async remove(
-    removeWalletDto: RemoveWalletDto,
-  ): Promise<Observable<WalletPopulate>> {
+  async remove(removeWalletDto: RemoveWalletDto): Promise<WalletPopulate> {
     try {
-      return await this.walletsServiceGrpc.remove(removeWalletDto);
+      return await this.walletsServiceGrpc.remove(removeWalletDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

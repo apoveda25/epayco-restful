@@ -8,9 +8,9 @@ import { SearchWalletDto } from '../dto/search-wallet.dto';
 import { SearchWalletsDto } from '../dto/search-wallets.dto';
 
 export interface WalletsServiceGrpc {
-  create(data: CreateWalletDto): Promise<Observable<WalletPopulate>>;
-  update(data: UpdateWalletDto): Promise<Observable<WalletPopulate>>;
-  remove(data: RemoveWalletDto): Promise<Observable<WalletPopulate>>;
-  find(data: FindWalletDto): Promise<Observable<WalletPopulate>>;
-  search(data: SearchWalletDto): Promise<Observable<SearchWalletsDto>>;
+  create(data: CreateWalletDto): Observable<WalletPopulate>;
+  update(data: UpdateWalletDto): Observable<WalletPopulate>;
+  remove(data: RemoveWalletDto): Observable<WalletPopulate>;
+  find(data: FindWalletDto): Observable<WalletPopulate>;
+  search(data: SearchWalletDto): Observable<SearchWalletsDto>;
 }

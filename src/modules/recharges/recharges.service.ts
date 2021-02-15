@@ -6,7 +6,6 @@ import {
   HttpStatus,
 } from '@nestjs/common';
 import { ClientGrpc } from '@nestjs/microservices';
-import { Observable } from 'rxjs';
 import { CreateRechargeDto } from './dto/create-recharge.dto';
 import { RechargePopulate } from './entities/recharge.entity';
 import { FindRechargeDto } from './dto/find-recharge.dto';
@@ -39,44 +38,38 @@ export class RechargesService implements OnModuleInit {
     cellphone,
     createdBy,
     mount,
-  }: CreateRechargeDto): Promise<Observable<RechargePopulate>> {
+  }: CreateRechargeDto): Promise<RechargePopulate> {
     try {
-      const user$ = await this.usersService.search({
+      const { users } = await this.usersService.search({
         document,
         cellphone,
       });
 
-      const { users } = await user$.toPromise();
-
       if (users && users.length) {
-        const wallet$ = await this.walletsService.find({
+        const wallet = await this.walletsService.find({
           _id: users[0].wallet._id,
         });
 
-        const wallet = await wallet$.toPromise();
-
-        const recharge$ = await this.rechargesServiceGrpc.create({
-          mount,
-          createdBy,
-          wallet: wallet._id,
-        });
-
-        const recharge = await recharge$.toPromise();
+        const recharge = await this.rechargesServiceGrpc
+          .create({
+            mount,
+            createdBy,
+            wallet: wallet._id,
+          })
+          .toPromise();
 
         const walletRecharges = Array.isArray(wallet.recharges)
           ? wallet.recharges.map((recharge) => recharge._id)
           : [];
 
-        const walletUpdated$ = await this.walletsService.update({
+        await this.walletsService.update({
           _id: wallet._id,
           balance: wallet.balance + recharge.mount,
           updatedBy: users[0]._id,
           recharges: [...walletRecharges, recharge._id],
         });
 
-        await walletUpdated$.toPromise();
-
-        return recharge$;
+        return recharge;
       }
 
       throw new HttpException(
@@ -88,11 +81,9 @@ export class RechargesService implements OnModuleInit {
     }
   }
 
-  async find(
-    findRechargeDto: FindRechargeDto,
-  ): Promise<Observable<RechargePopulate>> {
+  async find(findRechargeDto: FindRechargeDto): Promise<RechargePopulate> {
     try {
-      return await this.rechargesServiceGrpc.find(findRechargeDto);
+      return await this.rechargesServiceGrpc.find(findRechargeDto).toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -100,9 +91,11 @@ export class RechargesService implements OnModuleInit {
 
   async search(
     searchRechargeDto: SearchRechargeDto,
-  ): Promise<Observable<SearchRechargesDto>> {
+  ): Promise<SearchRechargesDto> {
     try {
-      return await this.rechargesServiceGrpc.search(searchRechargeDto);
+      return await this.rechargesServiceGrpc
+        .search(searchRechargeDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -110,9 +103,11 @@ export class RechargesService implements OnModuleInit {
 
   async update(
     updateRechargeDto: UpdateRechargeDto,
-  ): Promise<Observable<RechargePopulate>> {
+  ): Promise<RechargePopulate> {
     try {
-      return await this.rechargesServiceGrpc.update(updateRechargeDto);
+      return await this.rechargesServiceGrpc
+        .update(updateRechargeDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }
@@ -120,9 +115,11 @@ export class RechargesService implements OnModuleInit {
 
   async remove(
     removeRechargeDto: RemoveRechargeDto,
-  ): Promise<Observable<RechargePopulate>> {
+  ): Promise<RechargePopulate> {
     try {
-      return await this.rechargesServiceGrpc.remove(removeRechargeDto);
+      return await this.rechargesServiceGrpc
+        .remove(removeRechargeDto)
+        .toPromise();
     } catch (error) {
       throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
     }

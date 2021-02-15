@@ -3,6 +3,7 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { PaymentsService } from './payments.service';
 import { PaymentsController } from './payments.controller';
+import { WalletsModule } from '../wallets/wallets.module';
 
 @Module({
   imports: [
@@ -17,6 +18,7 @@ import { PaymentsController } from './payments.controller';
         },
       },
     ]),
+    WalletsModule,
   ],
   controllers: [PaymentsController],
   providers: [PaymentsService],
