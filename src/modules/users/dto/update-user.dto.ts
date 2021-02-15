@@ -5,7 +5,6 @@ import {
   IsPhoneNumber,
   IsMongoId,
   IsOptional,
-  IsDateString,
 } from 'class-validator';
 
 export class UpdateUserDto {
@@ -13,36 +12,36 @@ export class UpdateUserDto {
   @IsMongoId()
   _id: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   document?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   name?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsString()
   @IsOptional()
   surname?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsEmail()
   @IsOptional()
   email?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsPhoneNumber()
   @IsOptional()
   cellphone?: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsMongoId()
   updatedBy: string;
 
-  @ApiProperty()
+  @ApiProperty({ required: false })
   @IsMongoId()
   @IsOptional()
   wallet?: string;

@@ -15,6 +15,7 @@ import { UpdateRechargeDto } from './dto/update-recharge.dto';
 import { RechargePopulate } from './entities/recharge.entity';
 import { SearchRechargeDto } from './dto/search-recharge.dto';
 import { RemoveRechargeDto } from './dto/remove-recharge.dto';
+import { FindRechargeDto } from './dto/find-recharge.dto';
 
 @ApiTags('Recharges')
 @Controller('recharges')
@@ -29,8 +30,8 @@ export class RechargesController {
 
   @ApiOkResponse({ type: RechargePopulate })
   @Get(':_id')
-  async find(@Param('_id') _id: string) {
-    return await this.rechargesService.find({ _id });
+  async find(@Param() findRechargeDto: FindRechargeDto) {
+    return await this.rechargesService.find(findRechargeDto);
   }
 
   @ApiOkResponse({ type: RechargePopulate })
@@ -41,13 +42,13 @@ export class RechargesController {
 
   @ApiOkResponse({ type: RechargePopulate })
   @Patch()
-  async update(updateRechargeDto: UpdateRechargeDto) {
+  async update(@Body() updateRechargeDto: UpdateRechargeDto) {
     return await this.rechargesService.update(updateRechargeDto);
   }
 
   @ApiOkResponse({ type: RechargePopulate })
-  @Delete()
-  async remove(removeRechargeDto: RemoveRechargeDto) {
+  @Delete(':_id')
+  async remove(@Param() removeRechargeDto: RemoveRechargeDto) {
     return await this.rechargesService.remove(removeRechargeDto);
   }
 }

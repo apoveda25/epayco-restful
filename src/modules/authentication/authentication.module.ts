@@ -5,18 +5,23 @@ import { UsersModule } from '../users/users.module';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { join } from 'path';
 import { WalletsModule } from '../wallets/wallets.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'AUTH_PACKAGE',
-        transport: Transport.GRPC,
-        options: {
-          package: 'authentication',
-          protoPath: join(__dirname, 'authentication.proto'),
-          url: 'localhost:3010',
-        },
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            package: 'authentication',
+            protoPath: join(__dirname, 'authentication.proto'),
+            url: configService.get('grpc.authentication.url'),
+          },
+        }),
       },
     ]),
     UsersModule,

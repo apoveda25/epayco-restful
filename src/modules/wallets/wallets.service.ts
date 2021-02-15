@@ -14,17 +14,44 @@ import { SearchWalletDto } from './dto/search-wallet.dto';
 import { SearchWalletsDto } from './dto/search-wallets.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
 import { RemoveWalletDto } from './dto/remove-wallet.dto';
+import { GetBalanceWalletDto } from './dto/get-balance-wallet.dto';
+import { UsersService } from '../users/users.service';
 
 @Injectable()
 export class WalletsService implements OnModuleInit {
   private walletsServiceGrpc: WalletsServiceGrpc;
 
-  constructor(@Inject('WALLET_PACKAGE') private readonly client: ClientGrpc) {}
+  constructor(
+    @Inject('WALLET_PACKAGE') private readonly client: ClientGrpc,
+    private usersService: UsersService,
+  ) {}
 
   onModuleInit() {
     this.walletsServiceGrpc = this.client.getService<WalletsServiceGrpc>(
       'WalletsService',
     );
+  }
+
+  async getBalance({
+    document,
+    cellphone,
+  }: GetBalanceWalletDto): Promise<WalletPopulate> {
+    try {
+      const { users } = await this.usersService.search({ document, cellphone });
+
+      if (users && users.length) {
+        return await this.walletsServiceGrpc
+          .find({ _id: users[0].wallet._id })
+          .toPromise();
+      }
+
+      throw new HttpException(
+        'Document or cellphone invalid.',
+        HttpStatus.BAD_REQUEST,
+      );
+    } catch (error) {
+      throw new HttpException(error, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 
   async create(createWalletDto: CreateWalletDto): Promise<WalletPopulate> {

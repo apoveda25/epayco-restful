@@ -16,6 +16,7 @@ import { SearchPaymentDto } from './dto/search-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
 import { RemovePaymentDto } from './dto/remove-payment.dto';
 import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
+import { FindPaymentDto } from './dto/find-payment.dto';
 
 @ApiTags('Payments')
 @Controller('payments')
@@ -39,8 +40,8 @@ export class PaymentsController {
 
   @ApiOkResponse({ type: PaymentPopulate })
   @Get(':_id')
-  async find(@Param('_id') _id: string) {
-    return await this.paymentsService.find({ _id });
+  async find(@Param() findPaymentDto: FindPaymentDto) {
+    return await this.paymentsService.find(findPaymentDto);
   }
 
   @ApiOkResponse({ type: PaymentPopulate })
@@ -51,13 +52,13 @@ export class PaymentsController {
 
   @ApiOkResponse({ type: PaymentPopulate })
   @Patch()
-  async update(updatePaymentDto: UpdatePaymentDto) {
+  async update(@Body() updatePaymentDto: UpdatePaymentDto) {
     return await this.paymentsService.update(updatePaymentDto);
   }
 
   @ApiOkResponse({ type: PaymentPopulate })
-  @Delete()
-  async remove(removePaymentDto: RemovePaymentDto) {
+  @Delete(':_id')
+  async remove(@Param() removePaymentDto: RemovePaymentDto) {
     return await this.paymentsService.remove(removePaymentDto);
   }
 }

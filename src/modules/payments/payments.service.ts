@@ -91,19 +91,12 @@ export class PaymentsService implements OnModuleInit {
         payments: [...walletPayments, payment._id],
       });
 
-      await this.mailService.sendConfirmPayment({
-        _to: [wallet.user.email],
-        code: payment.code,
-      });
-
-      // const payment = await payment$.toPromise();
-      // await this.mailerService.sendMail({
-      //   to: 'test@nestjs.com', // list of receivers
-      //   from: 'noreply@nestjs.com', // sender address
-      //   subject: 'Testing Nest MailerModule ✔', // Subject line
-      //   text: 'welcome', // plaintext body
-      //   html: '<b>welcome</b>', // HTML body content
-      // });
+      await this.mailService.sendConfirmPayment(
+        {
+          to: [{ email: wallet.user.email, name: wallet.user.name }],
+        },
+        { code: payment.code },
+      );
 
       return payment;
     } catch (error) {

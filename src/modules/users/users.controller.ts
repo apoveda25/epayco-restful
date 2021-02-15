@@ -15,6 +15,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
 import { RemoveUserDto } from './dto/remove-user.dto';
+import { FindUserDto } from './dto/find-user.dto';
 
 @ApiTags('Users')
 @Controller('users')
@@ -29,8 +30,8 @@ export class UsersController {
 
   @ApiOkResponse({ type: UserPopulate })
   @Get(':_id')
-  async find(@Param('_id') _id: string) {
-    return await this.usersService.find({ _id });
+  async find(@Param() findUserDto: FindUserDto) {
+    return await this.usersService.find(findUserDto);
   }
 
   @ApiOkResponse({ type: UserPopulate })
@@ -41,13 +42,13 @@ export class UsersController {
 
   @ApiOkResponse({ type: UserPopulate })
   @Patch()
-  async update(updateUserDto: UpdateUserDto) {
+  async update(@Body() updateUserDto: UpdateUserDto) {
     return await this.usersService.update(updateUserDto);
   }
 
   @ApiOkResponse({ type: UserPopulate })
-  @Delete()
-  async remove(removeUserDto: RemoveUserDto) {
+  @Delete(':_id')
+  async remove(@Param() removeUserDto: RemoveUserDto) {
     return await this.usersService.remove(removeUserDto);
   }
 }

@@ -5,18 +5,23 @@ import { RechargesService } from './recharges.service';
 import { RechargesController } from './recharges.controller';
 import { UsersModule } from '../users/users.module';
 import { WalletsModule } from '../wallets/wallets.module';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    ClientsModule.register([
+    ClientsModule.registerAsync([
       {
         name: 'RECHARGE_PACKAGE',
-        transport: Transport.GRPC,
-        options: {
-          package: 'recharge',
-          protoPath: join(__dirname, 'recharge.proto'),
-          url: 'localhost:3010',
-        },
+        imports: [ConfigModule],
+        inject: [ConfigService],
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.GRPC,
+          options: {
+            package: 'recharge',
+            protoPath: join(__dirname, 'recharge.proto'),
+            url: configService.get('grpc.recharge.url'),
+          },
+        }),
       },
     ]),
     UsersModule,

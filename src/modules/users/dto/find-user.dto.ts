@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsString,
   IsMongoId,
@@ -7,6 +8,7 @@ import {
 } from 'class-validator';
 
 export class FindUserDto {
+  @ApiProperty()
   @IsMongoId()
   @IsOptional()
   _id?: string;
