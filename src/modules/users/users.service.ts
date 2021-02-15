@@ -8,7 +8,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { UsersServiceGrpc } from './interfaces/users-service-grpc.interface';
-import { User } from './entities/user.entity';
+import { UserPopulate } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
@@ -28,7 +28,9 @@ export class UsersService implements OnModuleInit {
     );
   }
 
-  async create(createUserDto: CreateUserDto): Promise<Observable<User>> {
+  async create(
+    createUserDto: CreateUserDto,
+  ): Promise<Observable<UserPopulate>> {
     try {
       return await this.usersServiceGrpc.create(createUserDto);
     } catch (error) {
@@ -36,7 +38,7 @@ export class UsersService implements OnModuleInit {
     }
   }
 
-  async find(findUserDto: FindUserDto): Promise<Observable<User>> {
+  async find(findUserDto: FindUserDto): Promise<Observable<UserPopulate>> {
     try {
       return await this.usersServiceGrpc.find(findUserDto);
     } catch (error) {
@@ -54,7 +56,9 @@ export class UsersService implements OnModuleInit {
     }
   }
 
-  async update(updateUserDto: UpdateUserDto): Promise<Observable<User>> {
+  async update(
+    updateUserDto: UpdateUserDto,
+  ): Promise<Observable<UserPopulate>> {
     try {
       return await this.usersServiceGrpc.update(updateUserDto);
     } catch (error) {
@@ -62,7 +66,9 @@ export class UsersService implements OnModuleInit {
     }
   }
 
-  async remove(removeUserDto: RemoveUserDto): Promise<Observable<User>> {
+  async remove(
+    removeUserDto: RemoveUserDto,
+  ): Promise<Observable<UserPopulate>> {
     try {
       return await this.usersServiceGrpc.remove(removeUserDto);
     } catch (error) {

@@ -1,19 +1,34 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { User } from '../../users/entities/user.entity';
+import { Recharge } from '../../recharges/entities/recharge.entity';
+import { Payment } from '../../payments/entities/payment.entity';
 export class Wallet {
+  @ApiProperty()
   _id: string;
 
+  @ApiProperty()
   balance: number;
 
+  @ApiProperty()
   createdAt: string;
 
+  @ApiProperty()
   updatedAt: string;
 
+  @ApiProperty()
   createdBy: string;
 
+  @ApiProperty()
   updatedBy: string;
+}
 
-  // user: User;
+export class WalletPopulate extends Wallet {
+  @ApiProperty({ type: () => User, required: false })
+  user?: User;
 
-  // recharges: Recharge[];
+  @ApiProperty({ type: () => [Recharge], required: false })
+  recharges?: Recharge[];
 
-  // payments: Payment[];
+  @ApiProperty({ type: () => [Payment], required: false })
+  payments?: Payment[];
 }

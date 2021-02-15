@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { Wallet } from '../../wallets/entities/wallet.entity';
 
 export class User {
   @ApiProperty()
@@ -33,5 +34,9 @@ export class User {
 
   @ApiProperty()
   updatedBy: string;
-  // wallet?: Wallet;
+}
+
+export class UserPopulate extends User {
+  @ApiProperty({ type: () => Wallet, required: false })
+  wallet?: Wallet;
 }

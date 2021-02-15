@@ -8,7 +8,7 @@ import {
 import { ClientGrpc } from '@nestjs/microservices';
 import { Observable } from 'rxjs';
 import { WalletsServiceGrpc } from './interfaces/wallets-service-grpc.interface';
-import { Wallet } from './entities/wallet.entity';
+import { WalletPopulate } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { FindWalletDto } from './dto/find-wallet.dto';
 import { SearchWalletDto } from './dto/search-wallet.dto';
@@ -28,7 +28,9 @@ export class WalletsService implements OnModuleInit {
     );
   }
 
-  async create(createWalletDto: CreateWalletDto): Promise<Observable<Wallet>> {
+  async create(
+    createWalletDto: CreateWalletDto,
+  ): Promise<Observable<WalletPopulate>> {
     try {
       return await this.walletsServiceGrpc.create(createWalletDto);
     } catch (error) {
@@ -36,7 +38,9 @@ export class WalletsService implements OnModuleInit {
     }
   }
 
-  async find(findWalletDto: FindWalletDto): Promise<Observable<Wallet>> {
+  async find(
+    findWalletDto: FindWalletDto,
+  ): Promise<Observable<WalletPopulate>> {
     try {
       return await this.walletsServiceGrpc.find(findWalletDto);
     } catch (error) {
@@ -54,7 +58,9 @@ export class WalletsService implements OnModuleInit {
     }
   }
 
-  async update(updateWalletDto: UpdateWalletDto): Promise<Observable<Wallet>> {
+  async update(
+    updateWalletDto: UpdateWalletDto,
+  ): Promise<Observable<WalletPopulate>> {
     try {
       return await this.walletsServiceGrpc.update(updateWalletDto);
     } catch (error) {
@@ -62,7 +68,9 @@ export class WalletsService implements OnModuleInit {
     }
   }
 
-  async remove(removeWalletDto: RemoveWalletDto): Promise<Observable<Wallet>> {
+  async remove(
+    removeWalletDto: RemoveWalletDto,
+  ): Promise<Observable<WalletPopulate>> {
     try {
       return await this.walletsServiceGrpc.remove(removeWalletDto);
     } catch (error) {

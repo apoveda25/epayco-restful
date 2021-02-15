@@ -1,5 +1,5 @@
 import { Observable } from 'rxjs';
-import { Wallet } from '../entities/wallet.entity';
+import { WalletPopulate } from '../entities/wallet.entity';
 import { CreateWalletDto } from '../dto/create-wallet.dto';
 import { UpdateWalletDto } from '../dto/update-wallet.dto';
 import { RemoveWalletDto } from '../dto/remove-wallet.dto';
@@ -8,9 +8,9 @@ import { SearchWalletDto } from '../dto/search-wallet.dto';
 import { SearchWalletsDto } from '../dto/search-wallets.dto';
 
 export interface WalletsServiceGrpc {
-  create(data: CreateWalletDto): Promise<Observable<Wallet>>;
-  update(data: UpdateWalletDto): Promise<Observable<Wallet>>;
-  remove(data: RemoveWalletDto): Promise<Observable<Wallet>>;
-  find(data: FindWalletDto): Promise<Observable<Wallet>>;
+  create(data: CreateWalletDto): Promise<Observable<WalletPopulate>>;
+  update(data: UpdateWalletDto): Promise<Observable<WalletPopulate>>;
+  remove(data: RemoveWalletDto): Promise<Observable<WalletPopulate>>;
+  find(data: FindWalletDto): Promise<Observable<WalletPopulate>>;
   search(data: SearchWalletDto): Promise<Observable<SearchWalletsDto>>;
 }

@@ -6,6 +6,7 @@ import { UsersModule } from './modules/users/users.module';
 import { ValidationPipe } from '@nestjs/common';
 import { WalletsModule } from './modules/wallets/wallets.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
+import { RechargesModule } from './modules/recharges/recharges.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -23,7 +24,12 @@ async function bootstrap() {
     .build();
 
   const documents = SwaggerModule.createDocument(app, config, {
-    include: [AuthenticationModule, UsersModule, WalletsModule],
+    include: [
+      AuthenticationModule,
+      UsersModule,
+      WalletsModule,
+      RechargesModule,
+    ],
   });
 
   SwaggerModule.setup('api/v1', app, documents);

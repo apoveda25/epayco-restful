@@ -15,7 +15,7 @@ import {
   ApiTags,
 } from '@nestjs/swagger';
 import { UsersService } from './users.service';
-import { User } from './entities/user.entity';
+import { UserPopulate } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { SearchUserDto } from './dto/search-user.dto';
@@ -26,19 +26,19 @@ import { RemoveUserDto } from './dto/remove-user.dto';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @ApiCreatedResponse({ type: User })
+  @ApiCreatedResponse({ type: UserPopulate })
   @Post()
   async create(@Body() createUserDto: CreateUserDto) {
     return await this.usersService.create(createUserDto);
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserPopulate })
   @Get(':id')
   async find(@Param('id') id: string) {
     return await this.usersService.find({ _id: id });
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserPopulate })
   @ApiQuery({ name: 'cellphone', type: String, required: false })
   @ApiQuery({ name: 'email', type: String, required: false })
   @ApiQuery({ name: 'surname', type: String, required: false })
@@ -50,13 +50,13 @@ export class UsersController {
     return await this.usersService.search(params);
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserPopulate })
   @Patch()
   async update(updateUserDto: UpdateUserDto) {
     return await this.usersService.update(updateUserDto);
   }
 
-  @ApiOkResponse({ type: User })
+  @ApiOkResponse({ type: UserPopulate })
   @Delete()
   async remove(removeUserDto: RemoveUserDto) {
     return await this.usersService.remove(removeUserDto);

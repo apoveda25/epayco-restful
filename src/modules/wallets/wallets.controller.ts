@@ -15,7 +15,7 @@ import {
   ApiQuery,
   ApiTags,
 } from '@nestjs/swagger';
-import { Wallet } from './entities/wallet.entity';
+import { WalletPopulate } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { SearchWalletDto } from './dto/search-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
@@ -26,19 +26,19 @@ import { RemoveWalletDto } from './dto/remove-wallet.dto';
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 
-  @ApiCreatedResponse({ type: Wallet })
+  @ApiCreatedResponse({ type: WalletPopulate })
   @Post()
   async create(@Body() createWalletDto: CreateWalletDto) {
     return await this.walletsService.create(createWalletDto);
   }
 
-  @ApiOkResponse({ type: Wallet })
+  @ApiOkResponse({ type: WalletPopulate })
   @Get(':id')
   async find(@Param('id') id: string) {
     return await this.walletsService.find({ _id: id });
   }
 
-  @ApiOkResponse({ type: Wallet })
+  @ApiOkResponse({ type: WalletPopulate })
   @ApiQuery({ name: 'balance', type: Number, required: false })
   @ApiQuery({ name: 'id', type: String, required: false })
   @Get()
@@ -46,13 +46,13 @@ export class WalletsController {
     return await this.walletsService.search(params);
   }
 
-  @ApiOkResponse({ type: Wallet })
+  @ApiOkResponse({ type: WalletPopulate })
   @Patch()
   async update(updateWalletDto: UpdateWalletDto) {
     return await this.walletsService.update(updateWalletDto);
   }
 
-  @ApiOkResponse({ type: Wallet })
+  @ApiOkResponse({ type: WalletPopulate })
   @Delete()
   async remove(removeWalletDto: RemoveWalletDto) {
     return await this.walletsService.remove(removeWalletDto);

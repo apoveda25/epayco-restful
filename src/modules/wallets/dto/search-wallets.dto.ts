@@ -1,5 +1,5 @@
-import { Wallet } from '../entities/wallet.entity';
+import { WalletPopulate } from '../entities/wallet.entity';
 
 export interface SearchWalletsDto {
-  wallets: Wallet[];
+  wallets: WalletPopulate[];
 }
