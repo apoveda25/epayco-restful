@@ -8,12 +8,7 @@ import {
   Query,
   Patch,
 } from '@nestjs/common';
-import {
-  ApiTags,
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiQuery,
-} from '@nestjs/swagger';
+import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { RechargesService } from './recharges.service';
 import { CreateRechargeDto } from './dto/create-recharge.dto';
 import { UpdateRechargeDto } from './dto/update-recharge.dto';
@@ -33,14 +28,12 @@ export class RechargesController {
   }
 
   @ApiOkResponse({ type: RechargePopulate })
-  @Get(':id')
-  async find(@Param('id') id: string) {
-    return await this.rechargesService.find({ _id: id });
+  @Get(':_id')
+  async find(@Param('_id') _id: string) {
+    return await this.rechargesService.find({ _id });
   }
 
   @ApiOkResponse({ type: RechargePopulate })
-  @ApiQuery({ name: 'mount', type: Number, required: false })
-  @ApiQuery({ name: 'id', type: String, required: false })
   @Get()
   async search(@Query() params: SearchRechargeDto) {
     return await this.rechargesService.search(params);

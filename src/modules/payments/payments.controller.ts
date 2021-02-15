@@ -1,34 +1,53 @@
-import { Controller, Get, Post, Body, Put, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Param,
+  Delete,
+  Query,
+  Patch,
+} from '@nestjs/common';
+import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 import { PaymentsService } from './payments.service';
+import { PaymentPopulate } from './entities/payment.entity';
 import { CreatePaymentDto } from './dto/create-payment.dto';
+import { SearchPaymentDto } from './dto/search-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
+import { RemovePaymentDto } from './dto/remove-payment.dto';
 
+@ApiTags('Payments')
 @Controller('payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 
+  @ApiCreatedResponse({ type: PaymentPopulate })
   @Post()
-  create(@Body() createPaymentDto: CreatePaymentDto) {
-    return this.paymentsService.create(createPaymentDto);
+  async create(@Body() createPaymentDto: CreatePaymentDto) {
+    return await this.paymentsService.create(createPaymentDto);
   }
 
+  @ApiOkResponse({ type: PaymentPopulate })
+  @Get(':_id')
+  async find(@Param('_id') _id: string) {
+    return await this.paymentsService.find({ _id });
+  }
+
+  @ApiOkResponse({ type: PaymentPopulate })
   @Get()
-  findAll() {
-    return this.paymentsService.findAll();
+  async search(@Query() params: SearchPaymentDto) {
+    return await this.paymentsService.search(params);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.paymentsService.findOne(+id);
+  @ApiOkResponse({ type: PaymentPopulate })
+  @Patch()
+  async update(updatePaymentDto: UpdatePaymentDto) {
+    return await this.paymentsService.update(updatePaymentDto);
   }
 
-  @Put(':id')
-  update(@Param('id') id: string, @Body() updatePaymentDto: UpdatePaymentDto) {
-    return this.paymentsService.update(+id, updatePaymentDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.paymentsService.remove(+id);
+  @ApiOkResponse({ type: PaymentPopulate })
+  @Delete()
+  async remove(removePaymentDto: RemovePaymentDto) {
+    return await this.paymentsService.remove(removePaymentDto);
   }
 }

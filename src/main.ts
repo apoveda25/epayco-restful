@@ -7,6 +7,7 @@ import { ValidationPipe } from '@nestjs/common';
 import { WalletsModule } from './modules/wallets/wallets.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
 import { RechargesModule } from './modules/recharges/recharges.module';
+import { PaymentsModule } from './modules/payments/payments.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -29,6 +30,7 @@ async function bootstrap() {
       UsersModule,
       WalletsModule,
       RechargesModule,
+      PaymentsModule,
     ],
   });
 

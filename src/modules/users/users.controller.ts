@@ -8,12 +8,7 @@ import {
   Query,
   Patch,
 } from '@nestjs/common';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { UsersService } from './users.service';
 import { UserPopulate } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -33,18 +28,12 @@ export class UsersController {
   }
 
   @ApiOkResponse({ type: UserPopulate })
-  @Get(':id')
-  async find(@Param('id') id: string) {
-    return await this.usersService.find({ _id: id });
+  @Get(':_id')
+  async find(@Param('_id') _id: string) {
+    return await this.usersService.find({ _id });
   }
 
   @ApiOkResponse({ type: UserPopulate })
-  @ApiQuery({ name: 'cellphone', type: String, required: false })
-  @ApiQuery({ name: 'email', type: String, required: false })
-  @ApiQuery({ name: 'surname', type: String, required: false })
-  @ApiQuery({ name: 'name', type: String, required: false })
-  @ApiQuery({ name: 'document', type: String, required: false })
-  @ApiQuery({ name: 'id', type: String, required: false })
   @Get()
   async search(@Query() params: SearchUserDto) {
     return await this.usersService.search(params);

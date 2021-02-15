@@ -9,12 +9,7 @@ import {
   Patch,
 } from '@nestjs/common';
 import { WalletsService } from './wallets.service';
-import {
-  ApiCreatedResponse,
-  ApiOkResponse,
-  ApiQuery,
-  ApiTags,
-} from '@nestjs/swagger';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { WalletPopulate } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
 import { SearchWalletDto } from './dto/search-wallet.dto';
@@ -33,14 +28,12 @@ export class WalletsController {
   }
 
   @ApiOkResponse({ type: WalletPopulate })
-  @Get(':id')
-  async find(@Param('id') id: string) {
-    return await this.walletsService.find({ _id: id });
+  @Get(':_id')
+  async find(@Param('_id') _id: string) {
+    return await this.walletsService.find({ _id });
   }
 
   @ApiOkResponse({ type: WalletPopulate })
-  @ApiQuery({ name: 'balance', type: Number, required: false })
-  @ApiQuery({ name: 'id', type: String, required: false })
   @Get()
   async search(@Query() params: SearchWalletDto) {
     return await this.walletsService.search(params);
