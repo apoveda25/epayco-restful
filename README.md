@@ -35,6 +35,9 @@ $ npm install
 ## Running the app
 
 ```bash
+# Redis Queue
+$ docker-compose up -d
+
 # development
 $ npm run start
 
@@ -44,6 +47,9 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## API Documents
+[Swagger UI](http://localhost:3000/api/v1)
 
 ## Test
 
