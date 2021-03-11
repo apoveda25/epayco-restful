@@ -1,24 +1,24 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
+  Param,
   Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { UsersService } from './users.service';
-import { UserPopulate } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
-import { SearchUserDto } from './dto/search-user.dto';
-import { RemoveUserDto } from './dto/remove-user.dto';
 import { FindUserDto } from './dto/find-user.dto';
+import { RemoveUserDto } from './dto/remove-user.dto';
+import { SearchUserDto } from './dto/search-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
+import { UserPopulate } from './entities/user.entity';
+import { UsersService } from './users.service';
 
 @ApiTags('Users')
-@Controller('users')
+@Controller('/api/v1/users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 

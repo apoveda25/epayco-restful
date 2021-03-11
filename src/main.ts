@@ -1,13 +1,13 @@
-import { NestFactory } from '@nestjs/core';
+import { ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
+import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { UsersModule } from './modules/users/users.module';
-import { ValidationPipe } from '@nestjs/common';
-import { WalletsModule } from './modules/wallets/wallets.module';
 import { AuthenticationModule } from './modules/authentication/authentication.module';
-import { RechargesModule } from './modules/recharges/recharges.module';
 import { PaymentsModule } from './modules/payments/payments.module';
+import { RechargesModule } from './modules/recharges/recharges.module';
+import { UsersModule } from './modules/users/users.module';
+import { WalletsModule } from './modules/wallets/wallets.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -34,9 +34,10 @@ async function bootstrap() {
     ],
   });
 
-  SwaggerModule.setup('api/v1', app, documents);
+  SwaggerModule.setup('docs/api/v1', app, documents);
 
   app.useGlobalPipes(new ValidationPipe());
+  app.enableCors();
 
   await app.listen(configService.get('app.port'));
 }

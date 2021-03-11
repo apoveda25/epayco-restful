@@ -1,25 +1,25 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
+  Param,
   Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
-import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
-import { PaymentsService } from './payments.service';
-import { PaymentPopulate } from './entities/payment.entity';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
+import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
 import { CreatePaymentDto } from './dto/create-payment.dto';
+import { FindPaymentDto } from './dto/find-payment.dto';
+import { RemovePaymentDto } from './dto/remove-payment.dto';
 import { SearchPaymentDto } from './dto/search-payment.dto';
 import { UpdatePaymentDto } from './dto/update-payment.dto';
-import { RemovePaymentDto } from './dto/remove-payment.dto';
-import { ConfirmPaymentDto } from './dto/confirm-payment.dto';
-import { FindPaymentDto } from './dto/find-payment.dto';
+import { PaymentPopulate } from './entities/payment.entity';
+import { PaymentsService } from './payments.service';
 
 @ApiTags('Payments')
-@Controller('payments')
+@Controller('/api/v1/payments')
 export class PaymentsController {
   constructor(private readonly paymentsService: PaymentsService) {}
 

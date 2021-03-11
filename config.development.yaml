@@ -1,7 +1,7 @@
 app:
   name: 'users-service-restful'
   host: 'http://localhost'
-  port: 3000
+  port: 4000
 
 db:
   redis:
@@ -11,12 +11,12 @@ db:
 
 grpc:
   authentication:
-    url: 'localhost:3010'
+    url: 'localhost:4010'
   payment:
-    url: 'localhost:3010'
+    url: 'localhost:4010'
   recharge:
-    url: 'localhost:3010'
+    url: 'localhost:4010'
   user:
-    url: 'localhost:3010'
+    url: 'localhost:4010'
   wallet:
-    url: 'localhost:3010'
+    url: 'localhost:4010'

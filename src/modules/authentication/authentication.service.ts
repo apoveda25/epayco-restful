@@ -5,13 +5,13 @@ import {
   Injectable,
   OnModuleInit,
 } from '@nestjs/common';
-import { UsersService } from '../users/users.service';
-import { RegisterAutheticationDto } from './dto/register-authetication.dto';
-import { AuthServiceGrpc } from './interfaces/auth-service-grpc.interface';
 import { ClientGrpc } from '@nestjs/microservices';
+import { UserPopulate } from '../users/entities/user.entity';
+import { UsersService } from '../users/users.service';
 import { WalletsService } from '../wallets/wallets.service';
 import { LoginAutheticationDto } from './dto/login-authetication.dto';
-import { UserPopulate } from '../users/entities/user.entity';
+import { RegisterAutheticationDto } from './dto/register-authetication.dto';
+import { AuthServiceGrpc } from './interfaces/auth-service-grpc.interface';
 
 @Injectable()
 export class AuthenticationService implements OnModuleInit {

@@ -1,25 +1,25 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
+  Param,
   Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
-import { WalletsService } from './wallets.service';
 import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
-import { WalletPopulate } from './entities/wallet.entity';
 import { CreateWalletDto } from './dto/create-wallet.dto';
+import { FindWalletDto } from './dto/find-wallet.dto';
+import { GetBalanceWalletDto } from './dto/get-balance-wallet.dto';
+import { RemoveWalletDto } from './dto/remove-wallet.dto';
 import { SearchWalletDto } from './dto/search-wallet.dto';
 import { UpdateWalletDto } from './dto/update-wallet.dto';
-import { RemoveWalletDto } from './dto/remove-wallet.dto';
-import { GetBalanceWalletDto } from './dto/get-balance-wallet.dto';
-import { FindWalletDto } from './dto/find-wallet.dto';
+import { WalletPopulate } from './entities/wallet.entity';
+import { WalletsService } from './wallets.service';
 
 @ApiTags('Wallets')
-@Controller('wallets')
+@Controller('/api/v1/wallets')
 export class WalletsController {
   constructor(private readonly walletsService: WalletsService) {}
 

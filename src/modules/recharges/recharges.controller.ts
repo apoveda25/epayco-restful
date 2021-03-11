@@ -1,24 +1,24 @@
 import {
-  Controller,
-  Get,
-  Post,
   Body,
-  Param,
+  Controller,
   Delete,
-  Query,
+  Get,
+  Param,
   Patch,
+  Post,
+  Query,
 } from '@nestjs/common';
-import { ApiTags, ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
-import { RechargesService } from './recharges.service';
+import { ApiCreatedResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger';
 import { CreateRechargeDto } from './dto/create-recharge.dto';
+import { FindRechargeDto } from './dto/find-recharge.dto';
+import { RemoveRechargeDto } from './dto/remove-recharge.dto';
+import { SearchRechargeDto } from './dto/search-recharge.dto';
 import { UpdateRechargeDto } from './dto/update-recharge.dto';
 import { RechargePopulate } from './entities/recharge.entity';
-import { SearchRechargeDto } from './dto/search-recharge.dto';
-import { RemoveRechargeDto } from './dto/remove-recharge.dto';
-import { FindRechargeDto } from './dto/find-recharge.dto';
+import { RechargesService } from './recharges.service';
 
 @ApiTags('Recharges')
-@Controller('recharges')
+@Controller('/api/v1/recharges')
 export class RechargesController {
   constructor(private readonly rechargesService: RechargesService) {}
 
